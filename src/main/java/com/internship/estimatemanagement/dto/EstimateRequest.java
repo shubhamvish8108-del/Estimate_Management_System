@@ -4,9 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 
-/**
- * Data Transfer Object for creating/updating estimates
- */
+
 public class EstimateRequest {
 
     @NotNull(message = "Chain ID is required")
@@ -26,7 +24,7 @@ public class EstimateRequest {
     private LocalDate deliveryDate;
     private String deliveryDetails;
 
-    // Constructors
+    
     public EstimateRequest() {}
 
     public EstimateRequest(Long chainId, String groupName, String brandName, String zoneName,
@@ -43,7 +41,7 @@ public class EstimateRequest {
         this.deliveryDetails = deliveryDetails;
     }
 
-    // Getters and Setters
+  
     public Long getChainId() { return chainId; }
     public void setChainId(Long chainId) { this.chainId = chainId; }
 
