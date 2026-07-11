@@ -1,6 +1,4 @@
-/* Custom Styles for Estimate Management System */
 
-/* General Styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
@@ -13,7 +11,7 @@ body {
     flex: 1;
 }
 
-/* Card Styles */
+
 .card {
     border: none;
     border-radius: 10px;
@@ -26,7 +24,7 @@ body {
     padding: 15px 20px;
 }
 
-/* Stat Cards */
+
 .stat-card {
     border-radius: 10px;
     color: white;
@@ -49,7 +47,7 @@ body {
     font-size: 24px;
 }
 
-/* Table Styles */
+
 .table {
     margin-bottom: 0;
 }
@@ -71,7 +69,7 @@ body {
     background-color: #f1f3f5;
 }
 
-/* Form Styles */
+
 .section-header {
     color: #495057;
     border-bottom: 2px solid #e9ecef;
@@ -107,7 +105,7 @@ body {
     padding: 5px 10px;
 }
 
-/* Navbar Styles */
+
 .navbar {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -122,26 +120,26 @@ body {
     transition: color 0.2s;
 }
 
-/* Badge Styles */
+
 .badge {
     padding: 5px 10px;
     border-radius: 6px;
     font-weight: 500;
 }
 
-/* Alert Styles */
+
 .alert {
     border-radius: 8px;
     border: none;
 }
 
-/* Footer */
+
 footer {
     margin-top: auto;
     border-top: 1px solid #dee2e6;
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 768px) {
     .stat-card {
         margin-bottom: 15px;
@@ -157,7 +155,7 @@ footer {
     }
 }
 
-/* Loading Spinner */
+
 .spinner {
     display: inline-block;
     width: 20px;
@@ -174,7 +172,7 @@ footer {
     }
 }
 
-/* Empty State */
+
 .empty-state {
     padding: 50px 20px;
     text-align: center;
