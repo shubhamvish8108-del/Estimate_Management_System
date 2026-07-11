@@ -32,9 +32,7 @@ public class EstimateController {
 
     // ==================== THYMELEAF VIEW ENDPOINTS ====================
 
-    /**
-     * Dashboard - Main page with statistics
-     */
+    
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         log.info("Loading dashboard");
@@ -51,9 +49,7 @@ public class EstimateController {
         return "dashboard";
     }
 
-    /**
-     * List all estimates
-     */
+ 
     @GetMapping("/list")
     public String listEstimates(Model model) {
         log.info("Listing all estimates");
@@ -61,9 +57,7 @@ public class EstimateController {
         return "estimate-list";
     }
 
-    /**
-     * Show create estimate form
-     */
+ 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         log.info("Showing create estimate form");
@@ -71,9 +65,7 @@ public class EstimateController {
         return "estimate-form";
     }
 
-    /**
-     * Show edit estimate form
-     */
+   
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         log.info("Showing edit form for estimate: {}", id);
@@ -82,9 +74,7 @@ public class EstimateController {
         return "estimate-edit";
     }
 
-    /**
-     * Handle estimate creation from form
-     */
+   
     @PostMapping("/create")
     public String createEstimate(@ModelAttribute EstimateRequest request, Model model) {
         log.info("Creating estimate via form");
@@ -100,9 +90,7 @@ public class EstimateController {
         }
     }
 
-    /**
-     * Handle estimate update from form
-     */
+  
     @PostMapping("/update/{id}")
     public String updateEstimate(@PathVariable Long id, @ModelAttribute EstimateRequest request, Model model) {
         log.info("Updating estimate via form: {}", id);
@@ -118,9 +106,7 @@ public class EstimateController {
         }
     }
 
-    /**
-     * Delete estimate with confirmation
-     */
+ 
     @PostMapping("/delete/{id}")
     public String deleteEstimate(@PathVariable Long id, Model model) {
         log.info("Deleting estimate: {}", id);
@@ -134,11 +120,8 @@ public class EstimateController {
         }
     }
 
-    // ==================== API JSON ENDPOINTS ====================
+ 
 
-    /**
-     * GET - Get all estimates (JSON)
-     */
     @GetMapping("/api/all")
     @ResponseBody
     public ResponseEntity<List<EstimateDTO>> getAllEstimatesApi() {
@@ -146,9 +129,7 @@ public class EstimateController {
         return ResponseEntity.ok(estimateService.getAllEstimates());
     }
 
-    /**
-     * GET - Get estimate by ID (JSON)
-     */
+   
     @GetMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<EstimateDTO> getEstimateByIdApi(@PathVariable Long id) {
@@ -156,9 +137,7 @@ public class EstimateController {
         return ResponseEntity.ok(estimateService.getEstimateById(id));
     }
 
-    /**
-     * GET - Get estimates by chain ID (JSON)
-     */
+  
     @GetMapping("/api/chain/{chainId}")
     @ResponseBody
     public ResponseEntity<List<EstimateDTO>> getEstimatesByChainApi(@PathVariable Long chainId) {
@@ -166,9 +145,7 @@ public class EstimateController {
         return ResponseEntity.ok(estimateService.getEstimatesByChainId(chainId));
     }
 
-    /**
-     * GET - Search estimates (JSON)
-     */
+
     @GetMapping("/api/search")
     @ResponseBody
     public ResponseEntity<List<EstimateDTO>> searchEstimatesApi(
@@ -179,9 +156,6 @@ public class EstimateController {
         return ResponseEntity.ok(estimateService.searchEstimates(groupName, brandName, zoneName));
     }
 
-    /**
-     * GET - Dashboard stats (JSON)
-     */
     @GetMapping("/api/stats")
     @ResponseBody
     public ResponseEntity<DashboardStats> getDashboardStatsApi() {
@@ -189,9 +163,7 @@ public class EstimateController {
         return ResponseEntity.ok(estimateService.getDashboardStats());
     }
 
-    /**
-     * POST - Create estimate (JSON)
-     */
+
     @PostMapping("/api/create")
     @ResponseBody
     public ResponseEntity<EstimateDTO> createEstimateApi(@Valid @RequestBody EstimateRequest request) {
@@ -200,9 +172,7 @@ public class EstimateController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    /**
-     * PUT - Update estimate (JSON)
-     */
+   
     @PutMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<EstimateDTO> updateEstimateApi(
@@ -212,9 +182,6 @@ public class EstimateController {
         return ResponseEntity.ok(estimateService.updateEstimate(id, request));
     }
 
-    /**
-     * DELETE - Delete estimate (JSON)
-     */
     @DeleteMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<Map<String, String>> deleteEstimateApi(@PathVariable Long id) {
