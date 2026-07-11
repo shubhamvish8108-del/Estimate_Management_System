@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Entity representing an Estimate in the system.
- * Estimates are linked to chains and contain service details, costs, and delivery info.
- */
+
 @Entity
 @Table(name = "estimates")
 public class Estimate {
@@ -53,7 +50,7 @@ public class Estimate {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Constructors
+   
     public Estimate() {}
 
     public Estimate(Long estimatedId, Long chainId, String groupName, String brandName,
@@ -75,7 +72,7 @@ public class Estimate {
         this.updatedAt = updatedAt;
     }
 
-    // Getters and Setters
+   
     public Long getEstimatedId() { return estimatedId; }
     public void setEstimatedId(Long estimatedId) { this.estimatedId = estimatedId; }
 
@@ -115,7 +112,7 @@ public class Estimate {
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
-    // Lifecycle callbacks
+   
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -133,7 +130,7 @@ public class Estimate {
         }
     }
 
-    // Builder pattern
+   
     public static Builder builder() { return new Builder(); }
 
     public static class Builder {
