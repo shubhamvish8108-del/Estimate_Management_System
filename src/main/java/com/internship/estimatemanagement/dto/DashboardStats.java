@@ -1,8 +1,6 @@
 package com.internship.estimatemanagement.dto;
 
-/**
- * Data Transfer Object for dashboard statistics
- */
+
 public class DashboardStats {
 
     private Long totalEstimates;
@@ -10,7 +8,7 @@ public class DashboardStats {
     private Long estimatesThisMonth;
     private Long uniqueChains;
 
-    // Constructors
+    
     public DashboardStats() {}
 
     public DashboardStats(Long totalEstimates, Double totalEstimatedAmount,
@@ -21,7 +19,7 @@ public class DashboardStats {
         this.uniqueChains = uniqueChains;
     }
 
-    // Getters and Setters
+    
     public Long getTotalEstimates() { return totalEstimates; }
     public void setTotalEstimates(Long totalEstimates) { this.totalEstimates = totalEstimates; }
 
@@ -34,7 +32,7 @@ public class DashboardStats {
     public Long getUniqueChains() { return uniqueChains; }
     public void setUniqueChains(Long uniqueChains) { this.uniqueChains = uniqueChains; }
 
-    // Builder
+    
     public static Builder builder() { return new Builder(); }
 
     public static class Builder {
