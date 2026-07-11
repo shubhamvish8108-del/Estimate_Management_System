@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimate Management - Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/estimates/dashboard">
+                <i class="fas fa-file-invoice-dollar me-2"></i>Estimate Management
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/estimates/dashboard">
+                            <i class="fas fa-chart-line me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/estimates/list">
+                            <i class="fas fa-list me-1"></i> All Estimates
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-light text-primary ms-2" href="/estimates/create">
+                            <i class="fas fa-plus me-1"></i> New Estimate
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-chart-line me-2"></i>Dashboard</h2>
+            <a href="/estimates/create" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Create Estimate
+            </a>
+        </div>
+
+        <!-- Success/Error Messages -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${param.deleted}" class="alert alert-success">
+            Estimate deleted successfully!
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card stat-card bg-primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-2">Total Estimates</h6>
+                                <h3 class="mb-0" th:text="${stats.totalEstimates}">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card bg-success">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-2">Total Amount</h6>
+                                <h3 class="mb-0">$<span th:text="${#numbers.formatDecimal(stats.totalEstimatedAmount, 1, 'COMMA', 2, 'POINT')}">0.00</span></h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card bg-info">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-2">This Month</h6>
+                                <h3 class="mb-0" th:text="${stats.estimatesThisMonth}">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card bg-warning">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted mb-2">Unique Chains</h6>
+                                <h3 class="mb-0" th:text="${stats.uniqueChains}">0</h3>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Estimates -->
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Recent Estimates</h5>
+            </div>
+            <div class="card-body">
+                <div th:if="${#lists.isEmpty(recentEstimates)}" class="text-center py-5">
+                    <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                    <p class="text-muted">No estimates yet. Create your first estimate!</p>
+                    <a href="/estimates/create" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Create Estimate
+                    </a>
+                </div>
+
+                <div th:unless="${#lists.isEmpty(recentEstimates)}" class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Chain ID</th>
+                                <th>Group</th>
+                                <th>Brand</th>
+                                <th>Service</th>
+                                <th>Total Cost</th>
+                                <th>Delivery Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="estimate : ${recentEstimates}">
+                                <td th:text="${estimate.estimatedId}">1</td>
+                                <td>
+                                    <span class="badge bg-secondary" th:text="${estimate.chainId}">1</span>
+                                </td>
+                                <td th:text="${estimate.groupName}">Group A</td>
+                                <td th:text="${estimate.brandName}">Brand X</td>
+                                <td th:text="${estimate.service}">Service Name</td>
+                                <td>$<span th:text="${#numbers.formatDecimal(estimate.totalCost, 1, 'COMMA', 2, 'POINT')}">0.00</span></td>
+                                <td th:text="${#temporals.format(estimate.deliveryDate, 'yyyy-MM-dd')}">2024-01-15</td>
+                                <td>
+                                    <a th:href="@{/estimates/edit/{id}(id=${estimate.estimatedId})}"
+                                       class="btn btn-sm btn-outline-primary" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-outline-danger"
+                                            onclick="confirmDelete([[${estimate.estimatedId}]])"
+                                            title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-end mt-3" th:unless="${#lists.isEmpty(recentEstimates)}">
+                    <a href="/estimates/list" class="btn btn-outline-primary">
+                        View All Estimates <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this estimate? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form id="deleteForm" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-1"></i>Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5 py-3 bg-light">
+        <div class="container text-center">
+            <p class="text-muted mb-0">Estimate Management System - Module 4 | Code-B IMS</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Delete confirmation function
+        function confirmDelete(id) {
+            if (confirm('Are you sure you want to delete estimate #' + id + '?')) {
+                document.getElementById('deleteForm').action = '/estimates/delete/' + id;
+                new bootstrap.Modal(document.getElementById('deleteModal')).show();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+com\internship\estimatemanagement\dto\EstimateDTO.class
+com\internship\estimatemanagement\dto\EstimateRequest.class
+com\internship\estimatemanagement\service\EstimateService.class
+com\internship\estimatemanagement\dto\EstimateDTO$Builder.class
+com\internship\estimatemanagement\EstimateManagementApplication.class
+com\internship\estimatemanagement\controller\EstimateController.class
+com\internship\estimatemanagement\dto\DashboardStats$Builder.class
+com\internship\estimatemanagement\repository\EstimateRepository.class
+com\internship\estimatemanagement\controller\GlobalExceptionHandler.class
+com\internship\estimatemanagement\dto\DashboardStats.class
+com\internship\estimatemanagement\entity\Estimate$Builder.class
+com\internship\estimatemanagement\entity\Estimate.class

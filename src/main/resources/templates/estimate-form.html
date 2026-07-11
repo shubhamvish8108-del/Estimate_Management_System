@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Estimate - Estimate Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/estimates/dashboard">
+                <i class="fas fa-file-invoice-dollar me-2"></i>Estimate Management
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/estimates/dashboard">
+                            <i class="fas fa-chart-line me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/estimates/list">
+                            <i class="fas fa-list me-1"></i> All Estimates
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active btn btn-light text-primary ms-2" href="/estimates/create">
+                            <i class="fas fa-plus me-1"></i> New Estimate
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Create New Estimate</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Error Message -->
+                        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show">
+                            <span th:text="${error}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <form th:action="@{/estimates/create}" th:object="${estimateRequest}" method="post">
+                            <!-- Client Details Section -->
+                            <h5 class="section-header">
+                                <i class="fas fa-user me-2"></i>Client Details
+                            </h5>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="chainId" class="form-label">
+                                        Chain ID <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="number" class="form-control" id="chainId"
+                                           th:field="*{chainId}" required min="1"
+                                           placeholder="Enter Chain ID">
+                                    <small class="text-muted">Link to existing chain for invoice generation</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="groupName" class="form-label">Group Name</label>
+                                    <input type="text" class="form-control" id="groupName"
+                                           th:field="*{groupName}" maxlength="50"
+                                           placeholder="Enter Group Name">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="brandName" class="form-label">Brand Name</label>
+                                    <input type="text" class="form-control" id="brandName"
+                                           th:field="*{brandName}" maxlength="50"
+                                           placeholder="Enter Brand Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="zoneName" class="form-label">Zone/Subzone Name</label>
+                                    <input type="text" class="form-control" id="zoneName"
+                                           th:field="*{zoneName}" maxlength="50"
+                                           placeholder="Enter Zone Name">
+                                </div>
+                            </div>
+
+                            <!-- Service Details Section -->
+                            <h5 class="section-header">
+                                <i class="fas fa-cogs me-2"></i>Service Details
+                            </h5>
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <label for="service" class="form-label">Service Description</label>
+                                    <input type="text" class="form-control" id="service"
+                                           th:field="*{service}" maxlength="100"
+                                           placeholder="Enter service description">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <label for="qty" class="form-label">Quantity (Units)</label>
+                                    <input type="number" class="form-control" id="qty"
+                                           th:field="*{qty}" min="1"
+                                           placeholder="Enter quantity"
+                                           oninput="calculateTotal()">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="costPerUnit" class="form-label">Cost Per Unit ($)</label>
+                                    <input type="number" class="form-control" id="costPerUnit"
+                                           th:field="*{costPerUnit}" min="0.01" step="0.01"
+                                           placeholder="Enter cost per unit"
+                                           oninput="calculateTotal()">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="totalCost" class="form-label">Total Cost ($)</label>
+                                    <input type="text" class="form-control bg-light" id="totalCost"
+                                           readonly placeholder="Auto-calculated">
+                                </div>
+                            </div>
+
+                            <!-- Delivery Details Section -->
+                            <h5 class="section-header">
+                                <i class="fas fa-truck me-2"></i>Delivery Details
+                            </h5>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="deliveryDate" class="form-label">Delivery Date</label>
+                                    <input type="date" class="form-control" id="deliveryDate"
+                                           th:field="*{deliveryDate}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="deliveryDetails" class="form-label">Delivery Details</label>
+                                    <input type="text" class="form-control" id="deliveryDetails"
+                                           th:field="*{deliveryDetails}" maxlength="100"
+                                           placeholder="Enter delivery instructions">
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="d-flex justify-content-between mt-4">
+                                <a href="/estimates/dashboard" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>Cancel
+                                </a>
+                                <div>
+                                    <button type="reset" class="btn btn-outline-secondary me-2">
+                                        <i class="fas fa-redo me-2"></i>Reset
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Create Estimate
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Auto-calculate total cost
+        function calculateTotal() {
+            const qty = parseFloat(document.getElementById('qty').value) || 0;
+            const cost = parseFloat(document.getElementById('costPerUnit').value) || 0;
+            const total = qty * cost;
+            document.getElementById('totalCost').value = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>
