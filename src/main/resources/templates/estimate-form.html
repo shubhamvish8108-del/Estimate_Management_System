@@ -9,7 +9,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="/estimates/dashboard">
@@ -37,7 +36,7 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -46,7 +45,7 @@
                         <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Create New Estimate</h4>
                     </div>
                     <div class="card-body">
-                        <!-- Error Message -->
+                    
                         <div th:if="${error}" class="alert alert-danger alert-dismissible fade show">
                             <span th:text="${error}"></span>
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -89,7 +88,7 @@
                                 </div>
                             </div>
 
-                            <!-- Service Details Section -->
+                     
                             <h5 class="section-header">
                                 <i class="fas fa-cogs me-2"></i>Service Details
                             </h5>
@@ -123,7 +122,7 @@
                                 </div>
                             </div>
 
-                            <!-- Delivery Details Section -->
+                            
                             <h5 class="section-header">
                                 <i class="fas fa-truck me-2"></i>Delivery Details
                             </h5>
@@ -141,7 +140,7 @@
                                 </div>
                             </div>
 
-                            <!-- Action Buttons -->
+                 
                             <div class="d-flex justify-content-between mt-4">
                                 <a href="/estimates/dashboard" class="btn btn-secondary">
                                     <i class="fas fa-arrow-left me-2"></i>Cancel
@@ -164,7 +163,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Auto-calculate total cost
+     
         function calculateTotal() {
             const qty = parseFloat(document.getElementById('qty').value) || 0;
             const cost = parseFloat(document.getElementById('costPerUnit').value) || 0;
