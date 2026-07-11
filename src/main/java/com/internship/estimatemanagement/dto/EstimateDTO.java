@@ -3,9 +3,7 @@ package com.internship.estimatemanagement.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Data Transfer Object for Estimate responses
- */
+
 public class EstimateDTO {
 
     private Long estimatedId;
@@ -22,7 +20,7 @@ public class EstimateDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Constructors
+    
     public EstimateDTO() {}
 
     public EstimateDTO(Long estimatedId, Long chainId, String groupName, String brandName,
@@ -44,7 +42,7 @@ public class EstimateDTO {
         this.updatedAt = updatedAt;
     }
 
-    // Getters and Setters
+     
     public Long getEstimatedId() { return estimatedId; }
     public void setEstimatedId(Long estimatedId) { this.estimatedId = estimatedId; }
 
@@ -84,7 +82,7 @@ public class EstimateDTO {
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
-    // Builder
+    
     public static Builder builder() { return new Builder(); }
 
     public static class Builder {
